@@ -4,6 +4,7 @@ import { Transaction } from './transaction.model';
 import exceljs from 'exceljs';
 import { StatusCodes } from 'http-status-codes';
 import ApiError from '../../../errors/ApiError';
+import QueryBuilder from '../../builder/QueryBuilder';
 
 const recordTransaction = async (data: {
   type: ITransactionType;
@@ -103,30 +104,23 @@ const getAllTransactions = async (query: Record<string, unknown>) => {
 };
 
 const downloadTransactions = async (query: Record<string, unknown>) => {
-  const { startDate, endDate, format } = query;
+  const { format, ...restQuery } = query;
 
   if (!format || !['csv', 'excel'].includes((format as string).toLowerCase())) {
      throw new ApiError(StatusCodes.BAD_REQUEST, "Please specify a valid file format (CSV or Excel) to download your transactions.");
   }
 
-  const mongoQuery: any = {};
-  
-  if (startDate || endDate) {
-    mongoQuery.createdAt = {};
-    if (startDate) mongoQuery.createdAt.$gte = new Date(startDate as string);
-    // Include the whole end date day by setting to end of day if only YYYY-MM-DD is passed
-    if (endDate) {
-       const end = new Date(endDate as string);
-       end.setUTCHours(23, 59, 59, 999);
-       mongoQuery.createdAt.$lte = end;
-    }
-  }
+  const transactionQuery = new QueryBuilder(
+    Transaction.find({})
+      .populate('user', 'name role email contact')
+      .populate('booking', 'customId category')
+      .sort('-createdAt'),
+    restQuery
+  )
+    .filter()
+    .sort();
 
-  const transactions = await Transaction.find(mongoQuery)
-    .populate('user', 'name role email contact')
-    .populate('booking', 'customId category')
-    .sort('-createdAt')
-    .lean();
+  const transactions = await transactionQuery.modelQuery.lean().exec();
 
   const workbook = new exceljs.Workbook();
   const worksheet = workbook.addWorksheet('Transactions');

@@ -6,81 +6,6 @@
     "auditLog": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\.fcf65746571b4cfed39132ff86a585a748f13936-audit.json",
     "files": [
         {
-            "date": 1776318720455,
-            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-16-11-error.log",
-            "hash": "30ad1b8a108deb8cd3ed78fca88e68dfbce414e4393d311a445a56aae08fb7bd"
-        },
-        {
-            "date": 1776329780464,
-            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-16-14-error.log",
-            "hash": "b996cc872cf7187c7c40200a254e2e9ddc0fb239547db46bd77608548d92eec5"
-        },
-        {
-            "date": 1776330134359,
-            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-16-15-error.log",
-            "hash": "6ba85abd5ab3502d9f83db42470dca7f970864982fb7065d270136237f99bf3e"
-        },
-        {
-            "date": 1776333617467,
-            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-16-16-error.log",
-            "hash": "0c673be1f3a82197853c7c2c3166d01c2e6581844e93ce82068dc1217cd3c6d2"
-        },
-        {
-            "date": 1776354908368,
-            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-16-21-error.log",
-            "hash": "752b3ee99505cb1bcefbce84891460ace443e392ba1c47528adeca90c5e8a5b9"
-        },
-        {
-            "date": 1776357563442,
-            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-16-22-error.log",
-            "hash": "8f18b7ac86a617e5a2523698255b7879f73ee2cf63078036f7c6af6a70bb672a"
-        },
-        {
-            "date": 1776398572157,
-            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-17-10-error.log",
-            "hash": "284e65f564e1f914a23dd8e1263da527892da216b2be92c8b94e6ad1b7a0dffe"
-        },
-        {
-            "date": 1776430112106,
-            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-17-18-error.log",
-            "hash": "432890e278428044a1a96fd2dbe3b55ad39717fe17ccd17403d0a8034c95f748"
-        },
-        {
-            "date": 1776431477050,
-            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-17-19-error.log",
-            "hash": "d11b7a739357052a383b50b066bdb3bb4fda825990bb21a7dbff1cb5930abf3d"
-        },
-        {
-            "date": 1776480147877,
-            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-18-08-error.log",
-            "hash": "609e6fc1fcb3b56ae2781474790ec960e5b706e1787babaaef87322b10d82812"
-        },
-        {
-            "date": 1776482640596,
-            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-18-09-error.log",
-            "hash": "22571f5953ec9dce8bc7be3ccfdb3314032b44f8d412348c2d65c559c7bb6336"
-        },
-        {
-            "date": 1776494740765,
-            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-18-12-error.log",
-            "hash": "14f97ece71724416b04f151d9b283799703191959e0781145a3e897fc0e60783"
-        },
-        {
-            "date": 1776498339568,
-            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-18-13-error.log",
-            "hash": "e714d50a0f100500c2ade7d2d9c50363f76d1d0fa4f896cff722a9d417df5998"
-        },
-        {
-            "date": 1776500025159,
-            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-18-14-error.log",
-            "hash": "4b037e488c35c25fee189ee1903b6b8c488b9ea85dd5cd0286f5c5b033f92ccb"
-        },
-        {
-            "date": 1776505444721,
-            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-18-15-error.log",
-            "hash": "1e9084a8c09ccac019840363678ff90a43db5939c5047b6a89e9512d4b805f62"
-        },
-        {
             "date": 1776655101363,
             "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-20-09-error.log",
             "hash": "34ad15e2eeab25d5cf379df66e436cb7998cac74d6e85cfb79f056396e423235"
@@ -464,6 +389,96 @@
             "date": 1777383172029,
             "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-28-19-error.log",
             "hash": "869364d0dbeebda3a50b882c3362b36274e348149a90fbf4572f9b89b1d50ebe"
+        },
+        {
+            "date": 1777384954874,
+            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-28-20-error.log",
+            "hash": "f3fbc6554199473d3aebf1146ca57f404c7884ab94b59c6d71b5202090c48545"
+        },
+        {
+            "date": 1777390535722,
+            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-28-21-error.log",
+            "hash": "475a05753e7268ebc0e2b8070d490b7fe9434683c19782359e0a2371f5a46bdb"
+        },
+        {
+            "date": 1777396773861,
+            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-28-23-error.log",
+            "hash": "0b5b256f00e682fc8c028fd69091f06fb57b925e6e604abc920a3b0e59d84eae"
+        },
+        {
+            "date": 1777399463939,
+            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-29-00-error.log",
+            "hash": "7ed5bb99e5fb9fdec47bf29cf4bdc47f9dd06d86fffa0b7605d22a8495044388"
+        },
+        {
+            "date": 1777404883486,
+            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-29-01-error.log",
+            "hash": "3f5b8ac14f6ab44981aaf0f8f29c98a6c5b7b8203247e15391b936783f2a7d07"
+        },
+        {
+            "date": 1777410158870,
+            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-29-03-error.log",
+            "hash": "2dae53faf802ff4388c1e22a588e74728b9fc2b1adace492856c3dd5a651e291"
+        },
+        {
+            "date": 1777417395626,
+            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-29-05-error.log",
+            "hash": "0e60aa6bf9f3de60658cfb69c44ea7aedf1baae660754e4f0b42e666ab704a74"
+        },
+        {
+            "date": 1777423026301,
+            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-29-06-error.log",
+            "hash": "c32233aa739560e80406e94c5c141caec2e209d747db922a94af301bed9a03b1"
+        },
+        {
+            "date": 1777425789672,
+            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-29-07-error.log",
+            "hash": "5f24d8a9e1a609f51ed9aef0bb62a5795ca740ca443179f7abbce3fc81d5df68"
+        },
+        {
+            "date": 1777428608643,
+            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-29-08-error.log",
+            "hash": "05276bc637499bfaaef1e0af270f3be11342cf3e9dea00c0c0a05bcd3293490a"
+        },
+        {
+            "date": 1777431757880,
+            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-29-09-error.log",
+            "hash": "2e36a30355cd599214a481b3f70604799e366500e530da4fd710b0d03026fb7f"
+        },
+        {
+            "date": 1777436640384,
+            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-29-10-error.log",
+            "hash": "3248dc015dbd812d7abad63019bf82801f7c91512932ecbdd50f62f72611d8f0"
+        },
+        {
+            "date": 1777439783645,
+            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-29-11-error.log",
+            "hash": "ed707650c29edad8980acf8654c5adb124010fe7b1e580d49b244646f0e2a36f"
+        },
+        {
+            "date": 1777443080924,
+            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-29-12-error.log",
+            "hash": "893996a8658e19d0d268266b254fe13e051067b47dc759152625d2dff014a282"
+        },
+        {
+            "date": 1777446437009,
+            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-04-29-13-error.log",
+            "hash": "3a8e126c2477e33f33eb9cf2dc97ea42db4f5e46594b970a77948abacd70010a"
+        },
+        {
+            "date": 1777798642319,
+            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-05-03-14-error.log",
+            "hash": "b72ea74346eed4b75b6f763d68cef54d4f6113c004938b214c4a921f3310d19c"
+        },
+        {
+            "date": 1777798913686,
+            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-05-03-15-error.log",
+            "hash": "a0e93d1f1cd268ab4d8ea2d2c75e1be7108cd32bafeedee5a724e1bafad3d960"
+        },
+        {
+            "date": 1777803372616,
+            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\errors\\fixmate-2026-05-03-16-error.log",
+            "hash": "211e11dc3b1e129633fbc91c6f12cbfae48cd9ab3b1c86166d55b80f3bcf0f82"
         }
     ],
     "hashType": "sha256"

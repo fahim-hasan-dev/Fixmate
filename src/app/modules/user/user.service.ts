@@ -102,27 +102,24 @@ const deleteProfile = async (user: JwtPayload, payload: { password: string }) =>
 };
 
 const downloadUsers = async (query: Record<string, unknown>) => {
-  const { startDate, endDate, format } = query;
+  const { format, ...restQuery } = query;
 
   if (!format || !['csv', 'excel'].includes((format as string).toLowerCase())) {
-     throw new ApiError(StatusCodes.BAD_REQUEST, "Please specify a valid file format (CSV or Excel) for the download.");
+    throw new ApiError(StatusCodes.BAD_REQUEST, "Please specify a valid file format (CSV or Excel) for the download.");
   }
 
-  const mongoQuery: any = {};
-  
-  if (startDate || endDate) {
-    mongoQuery.createdAt = {};
-    if (startDate) mongoQuery.createdAt.$gte = new Date(startDate as string);
-    if (endDate) {
-       const end = new Date(endDate as string);
-       end.setUTCHours(23, 59, 59, 999);
-       mongoQuery.createdAt.$lte = end;
-    }
-  }
+  const userQuery = new QueryBuilder(
+    User.find({
+      role: { $ne: USER_ROLES.ADMIN },
+      status: { $ne: USER_STATUS.DELETED },
+    }),
+    restQuery
+  )
+    .search(['name', 'email', 'contact', 'customId'])
+    .filter()
+    .sort();
 
-  const users = await User.find(mongoQuery)
-    .sort('-createdAt')
-    .lean();
+  const users = await userQuery.modelQuery.lean().exec();
 
   const workbook = new exceljs.Workbook();
   const worksheet = workbook.addWorksheet('Users');

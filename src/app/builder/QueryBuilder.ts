@@ -37,6 +37,8 @@ class QueryBuilder<T> {
       'withLocked',
       'showHidden',
       'download',
+      'startDate',
+      'endDate',
     ];
     excludeFields.forEach(el => delete queryObj[el]);
 
@@ -51,6 +53,19 @@ class QueryBuilder<T> {
         filters[key] = { $in: value };
       }
     });
+
+    if (this.query.startDate || this.query.endDate) {
+      filters.createdAt = {};
+      if (this.query.startDate) {
+        filters.createdAt.$gte = new Date(this.query.startDate as string);
+      }
+      if (this.query.endDate) {
+        const end = new Date(this.query.endDate as string);
+        end.setUTCHours(23, 59, 59, 999);
+        filters.createdAt.$lte = end;
+      }
+    }
+
     if (queryObj.minPrice || queryObj.maxPrice) {
       filters.price = {};
       if (queryObj.minPrice) {

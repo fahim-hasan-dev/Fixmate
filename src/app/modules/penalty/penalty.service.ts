@@ -182,33 +182,23 @@ const getMyPenalties = async (user: JwtPayload, query: Record<string, unknown>) 
   return { meta, data };
 };
 
+
+// download penalties
 const downloadPenalties = async (query: Record<string, unknown>) => {
-  const { startDate, endDate, format } = query;
+  const { format, ...restQuery } = query;
 
   if (!format || !['csv', 'excel'].includes((format as string).toLowerCase())) {
      throw new ApiError(StatusCodes.BAD_REQUEST, "Please specify a valid file format (CSV or Excel) for your download.");
   }
 
-  const mongoQuery: any = {};
+  const penaltyQuery = new QueryBuilder(
+    Penalty.find({}).sort('-createdAt'),
+    restQuery
+  )
+    .filter()
+    .sort();
 
-  if (startDate || endDate) {
-    mongoQuery.createdAt = {};
-    if (startDate) mongoQuery.createdAt.$gte = new Date(startDate as string);
-    if (endDate) {
-       const end = new Date(endDate as string);
-       end.setUTCHours(23, 59, 59, 999);
-       mongoQuery.createdAt.$lte = end;
-    }
-  }
-
-  if (query.status) {
-    const statusArray = (query.status as string).split(',').map(s => s.trim());
-    mongoQuery.status = { $in: statusArray };
-  }
-
-  const penalties = await Penalty.find(mongoQuery)
-    .sort('-createdAt')
-    .lean();
+  const penalties = await penaltyQuery.modelQuery.lean().exec();
 
   const workbook = new exceljs.Workbook();
   const worksheet = workbook.addWorksheet('Penalties');
