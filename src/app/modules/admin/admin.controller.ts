@@ -11,7 +11,11 @@ import { TermsAndPolicyController } from '../terms&policy/terms&policy.controlle
 
 // Controller for platform overview stats
 const overview = catchAsync(async (req: Request, res: Response) => {
-  const result = await AdminServices.overview(req.query.year as string);
+  const result = await AdminServices.overview(
+    req.query.year as string,
+    req.query.startDate as string,
+    req.query.endDate as string
+  );
 
   sendResponse(res, {
     success: true,

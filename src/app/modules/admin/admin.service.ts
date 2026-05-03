@@ -8,9 +8,20 @@ import { PAYMENT_STATUS } from '../../../enum/payment';
 import { Penalty } from '../penalty/penalty.model';
 
 // Get platform overview statistics (users, providers, bookings, revenue)
-export const overview = async (yearChart: string) => {
-  const totalProviders = await User.countDocuments({ role: USER_ROLES.PROVIDER });
-  const totalUsers = await User.countDocuments({ role: { $ne: USER_ROLES.ADMIN } });
+export const overview = async (yearChart: string, startDate?: string, endDate?: string) => {
+  const dateQuery: any = {};
+  if (startDate || endDate) {
+    dateQuery.createdAt = {};
+    if (startDate) dateQuery.createdAt.$gte = new Date(startDate);
+    if (endDate) {
+      const end = new Date(endDate);
+      end.setUTCHours(23, 59, 59, 999);
+      dateQuery.createdAt.$lte = end;
+    }
+  }
+
+  const totalProviders = await User.countDocuments({ role: USER_ROLES.PROVIDER, ...dateQuery });
+  const totalUsers = await User.countDocuments({ role: { $ne: USER_ROLES.ADMIN }, ...dateQuery });
   const upCommingOrders = await Booking.countDocuments({ bookingStatus: BOOKING_STATUS.ACCEPTED });
 
   const topProviders = await User.aggregate([
@@ -42,7 +53,7 @@ export const overview = async (yearChart: string) => {
     },
   ]);
 
-  const recentServices = await Booking.find({bookingStatus: {$ne: BOOKING_STATUS.CREATED}})
+  const recentServices = await Booking.find({ bookingStatus: { $ne: BOOKING_STATUS.CREATED } })
     .select('provider bookingStatus customer date service customId paymentId createdAt')
     .populate('provider', 'name contact address providerDetails.category')
     .populate('customer', 'name')
@@ -63,15 +74,13 @@ export const overview = async (yearChart: string) => {
     };
   });
 
-
-
   const [{ totalClientPenalty = 0 } = {}] = await Penalty.aggregate([
-    { $match: { type: 'CLIENT' } },
+    { $match: { type: 'CLIENT', ...dateQuery } },
     { $group: { _id: null, totalClientPenalty: { $sum: '$taken' } } },
   ]);
 
   const [{ totalProviderPenalty = 0 } = {}] = await Penalty.aggregate([
-    { $match: { type: 'PROVIDER', amount: 30 } },
+    { $match: { type: 'PROVIDER', amount: 30, ...dateQuery } },
     { $group: { _id: null, totalProviderPenalty: { $sum: '$taken' } } },
   ]);
 
@@ -87,7 +96,8 @@ export const overview = async (yearChart: string) => {
     { $unwind: '$bookingDetails' },
     {
       $match: {
-        'bookingDetails.bookingStatus': { $in: [BOOKING_STATUS.SETTLED, BOOKING_STATUS.AUTO_SETTLED] }
+        'bookingDetails.bookingStatus': { $in: [BOOKING_STATUS.SETTLED, BOOKING_STATUS.AUTO_SETTLED] },
+        ...dateQuery
       }
     },
     { $group: { _id: null, totalRevenueValue: { $sum: '$servicePrice' } } },
@@ -108,7 +118,8 @@ export const overview = async (yearChart: string) => {
         $or: [
           { 'bookingDetails.bookingStatus': { $in: [BOOKING_STATUS.SETTLED, BOOKING_STATUS.AUTO_SETTLED] } },
           { paymentStatus: PAYMENT_STATUS.PARTIAL_REFUNDED }
-        ]
+        ],
+        ...dateQuery
       }
     },
     { $group: { _id: null, totalPlatformFee: { $sum: '$platformFee' } } },
