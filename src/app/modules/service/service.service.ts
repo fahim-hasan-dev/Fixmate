@@ -38,6 +38,10 @@ const updateService = async (id: string, payload: Partial<IService>) => {
   }
 
   const service = await Service.findByIdAndUpdate(id, payload, { new: true }).lean().exec();
+  
+  // Clear service cache on update
+  await invalidateServiceCache(id);
+
   return service;
 };
 
@@ -198,13 +202,30 @@ const getServices = async (user: JwtPayload, query: any) => {
   return { meta: { total, limit, page, totalPage }, data };
 };
 
-// Get detailed information about a specific service by its ID
+import { redisConnection } from '../../../helpers/redis';
+import { CACHE_KEYS, invalidateServiceCache } from '../../utils/cacheUtils';
+
+// Get detailed information about a specific service by its ID with caching
 const getServiceById = async (id: string, user?: JwtPayload) => {
-  const service = await Service.findById(id)
-    .populate('creator', 'name image email contact location customId address providerDetails.averageRating providerDetails.totalRating providerDetails.availableDay providerDetails.startTime providerDetails.endTime providerDetails.language providerDetails.overView providerDetails.category providerDetails.isVatRegistered')
-    .lean()
-    .exec();
-  if (!service) throw new ApiError(StatusCodes.NOT_FOUND, 'We couldn\'t find the service details in our system.');
+  const cacheKey = CACHE_KEYS.SERVICE_DETAILS(id);
+
+  // Check cache for existing service data
+  const cachedService = await redisConnection.get(cacheKey);
+  let service: any;
+
+  if (cachedService) {
+    service = JSON.parse(cachedService);
+  } else {
+    service = await Service.findById(id)
+      .populate('creator', 'name image email contact location customId address providerDetails.averageRating providerDetails.totalRating providerDetails.availableDay providerDetails.startTime providerDetails.endTime providerDetails.language providerDetails.overView providerDetails.category providerDetails.isVatRegistered')
+      .lean()
+      .exec();
+
+    if (!service) throw new ApiError(StatusCodes.NOT_FOUND, 'We couldn\'t find the service details in our system.');
+
+    // Cache service details for 24 hours
+    await redisConnection.set(cacheKey, JSON.stringify(service), 'EX', 24 * 60 * 60);
+  }
 
   if (user && user.role === USER_ROLES.CLIENT) {
     const client = await User.findById(user.authId).select('location').lean();
@@ -227,12 +248,19 @@ const deleteService = async (id: string) => {
     .lean()
     .exec();
   if (!service) throw new ApiError(StatusCodes.NOT_FOUND, 'We couldn\'t find the service you want to delete.');
+
+  // Clear service cache on deletion
+  await invalidateServiceCache(id);
   return service;
 };
 
 const toggleServiceSuspension = async (id: string, isSuspended: boolean) => {
   const service = await Service.findByIdAndUpdate(id, { isSuspended }, { new: true }).lean().exec();
   if (!service) throw new ApiError(StatusCodes.NOT_FOUND, 'We couldn\'t find the service you want to update.');
+
+  // Clear service cache on suspension toggle
+  await invalidateServiceCache(id);
+
   return service;
 };
 

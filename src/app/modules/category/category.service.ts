@@ -15,16 +15,17 @@ const addNewCategory = async (category: ICategory) => {
   }
   console.log({ category })
   const result = await Category.create(category);
-  
+
   // Clear category cache to reflect the new addition
   await invalidateCategoryCache();
-  
+
   return result;
 };
 
 // Retrieve all active categories with Redis caching for simple requests
 const getCategories = async (query: Record<string, unknown>) => {
   const isSimpleQuery = !query.searchTerm && !query.page && !query.limit;
+  
 
   if (isSimpleQuery) {
     const cachedCategories = await redisConnection.get(CACHE_KEYS.CATEGORIES);
@@ -47,6 +48,7 @@ const getCategories = async (query: Record<string, unknown>) => {
   const result = { data, meta };
 
   if (isSimpleQuery) {
+    console.log('Caching categories');
     // Cache the full category list for 24 hours
     await redisConnection.set(CACHE_KEYS.CATEGORIES, JSON.stringify(result), 'EX', 24 * 60 * 60);
   }

@@ -1,15 +1,28 @@
-// Terms&policy Service
 import { TermsModel } from './terms&policy.model';
+import { redisConnection } from '../../../helpers/redis';
+import { CACHE_KEYS, invalidateTermsAndPolicyCache } from '../../utils/cacheUtils';
 
-// Retrieve the current terms and conditions content
+// Retrieve the current terms and conditions content 
 const getTerms = async () => {
+  const cached = await redisConnection.get(CACHE_KEYS.TERMS);
+  if (cached) return JSON.parse(cached);
+
   const result = await TermsModel.findOne({ type: 'terms' }).select('content -_id').lean().exec();
+  if (result) {
+    await redisConnection.set(CACHE_KEYS.TERMS, JSON.stringify(result), 'EX', 7 * 24 * 60 * 60);
+  }
   return result;
 };
 
-// Retrieve the current privacy policy content
+// Retrieve the current privacy policy 
 const getPolicy = async () => {
+  const cached = await redisConnection.get(CACHE_KEYS.POLICY);
+  if (cached) return JSON.parse(cached);
+
   const result = await TermsModel.findOne({ type: 'policy' }).select('content -_id').lean().exec();
+  if (result) {
+    await redisConnection.set(CACHE_KEYS.POLICY, JSON.stringify(result), 'EX', 7 * 24 * 60 * 60);
+  }
   return result;
 };
 
@@ -22,6 +35,7 @@ const upsertTerms = async (content: string) => {
   )
     .lean()
     .exec();
+  await invalidateTermsAndPolicyCache('terms');
   return result;
 };
 
@@ -34,6 +48,7 @@ const upsertPolicy = async (content: string) => {
   )
     .lean()
     .exec();
+  await invalidateTermsAndPolicyCache('policy');
   return result;
 };
 
