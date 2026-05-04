@@ -6,11 +6,6 @@
     "auditLog": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\successes\\.b34f1cfe187b07bb905f6712c74bc7cdbd481408-audit.json",
     "files": [
         {
-            "date": 1776682800408,
-            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\successes\\fixmate-2026-04-20-17-success.log",
-            "hash": "8a3c22bfb066ec3bdfb18ed5c34b382c94fb1800d2f51c3f654cfb8f9f2eb41d"
-        },
-        {
             "date": 1776686400377,
             "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\successes\\fixmate-2026-04-20-18-success.log",
             "hash": "ebfc5f0cc376875df19d46fec5f3c0e20dd46c36bf6d1a2d746c4fb38a250b6c"
@@ -1159,6 +1154,11 @@
             "date": 1777888881776,
             "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\successes\\fixmate-2026-05-04-16-success.log",
             "hash": "e8d5913f41a8dd20bdacae61de4ba98be2634df8192dcaa8d7740aee20eee7eb"
+        },
+        {
+            "date": 1777892414916,
+            "name": "D:\\Fahim\\Projects\\Fixmate\\logs\\winston\\successes\\fixmate-2026-05-04-17-success.log",
+            "hash": "29c89a6060066302d0f23dfcd58eace5feb0d91dd3ca226e242ac5bd7517bf41"
         }
     ],
     "hashType": "sha256"

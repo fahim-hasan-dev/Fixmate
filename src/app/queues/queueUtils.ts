@@ -1,11 +1,12 @@
 import { bookingQueue, cleanupQueue } from './index';
 import { logger } from '../../shared/logger';
- 
+
 /**
  * Schedules an auto-settlement job for a booking to run after 48 hours.
  */
 export const scheduleAutoSettlement = async (bookingId: string) => {
-  const delay = 48 * 60 * 60 * 1000;
+  // const delay = 48 * 60 * 60 * 1000;
+  const delay = 2 * 60 * 1000;
   const jobId = `settle-${bookingId}`;
   try {
     await bookingQueue.add('settle-booking', { bookingId }, { delay, jobId });
@@ -14,7 +15,7 @@ export const scheduleAutoSettlement = async (bookingId: string) => {
     logger.error(`Failed to schedule auto-settlement for ${bookingId}:`, error);
   }
 };
- 
+
 export const cancelScheduledSettlement = async (bookingId: string) => {
   const jobId = `settle-${bookingId}`;
   try {
