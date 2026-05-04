@@ -197,9 +197,19 @@ export class BookingStateMachine {
           break;
 
         case BOOKING_STATUS.SETTLED:
-        case BOOKING_STATUS.AUTO_SETTLED:
           notificationTarget = booking.provider;
           message = `Your earnings for the ${serviceName} job have been added to your wallet. Well done!`;
+          break;
+
+        case BOOKING_STATUS.AUTO_SETTLED:
+          // Notify provider about the auto-settlement status
+          await NotificationService.insertNotification({
+            for: booking.provider,
+            message: `Booking Auto-Settled: Your booking for ${serviceName} has been automatically settled by the system.`,
+          });
+          // Notify customer about auto-completion
+          notificationTarget = booking.customer;
+          message = `Your booking for ${serviceName} has been auto-completed and settled as no feedback was received within the required timeframe.`;
           break;
       }
 
