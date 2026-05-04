@@ -4,9 +4,8 @@ import { INotification } from './notification.interface';
 import { Notification } from './notification.model';
 import { FilterQuery } from 'mongoose';
 import QueryBuilder from '../../builder/QueryBuilder';
-
-import { PushNotificationService } from './pushNotification.service';
 import { User } from '../user/user.model';
+import { notificationQueue } from '../../queues';
 
 // Save a new notification and trigger push/socket updates
 const insertNotification = async (payload: Partial<INotification>): Promise<INotification> => {
@@ -17,11 +16,11 @@ const insertNotification = async (payload: Partial<INotification>): Promise<INot
     const receiverUser = await User.findById(receiverId).select('fcmToken fullName');
 
     if (receiverUser && receiverUser.fcmToken) {
-      await PushNotificationService.sendPushNotification(
-        receiverUser.fcmToken,
-        'New Notification',
-        result.message,
-      );
+      await notificationQueue.add('send-push-notification', {
+        fcmToken: receiverUser.fcmToken,
+        title: 'New Notification',
+        message: result.message,
+      });
     }
   }
 

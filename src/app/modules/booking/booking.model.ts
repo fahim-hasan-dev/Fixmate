@@ -80,6 +80,10 @@ const bookingSchema = new Schema<IBooking>(
   },
 );
 
+bookingSchema.index({ customer: 1, bookingStatus: 1 });
+bookingSchema.index({ provider: 1, bookingStatus: 1 });
+bookingSchema.index({ createdAt: -1 });
+
 bookingSchema.index({ location: '2dsphere' });
 
 bookingSchema.pre('save', async function (this: IBooking & Document, next) {

@@ -234,6 +234,11 @@ const UserSchema = new Schema<IUser, UserModel>(
   },
 );
 
+UserSchema.index({ role: 1, status: 1 });
+UserSchema.index({ verified: 1 });
+UserSchema.index({ 'providerDetails.verificationStatus': 1 });
+UserSchema.index({ 'providerDetails.rankingScore': -1 });
+
 UserSchema.index({ location: '2dsphere' });
 
 UserSchema.virtual('providerDetails.metrics.acceptance_rate').get(function (this: IUser) {

@@ -12,7 +12,7 @@ import { calculateDistance } from '../../../shared/calculateDistance';
 
 // Add a new service offered by a provider
 const addService = async (user: JwtPayload, payload: Partial<IService>) => {
-  const userData = await User.findById(user.authId);
+  const userData = await User.findById(user.authId).lean();
   
   if(userData?.providerDetails?.verificationStatus !== VERIFICATION_STATUS.APPROVED){
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Your account is not verified, please verify your account to add service.');
@@ -74,7 +74,7 @@ const getHomeServices = async (user: JwtPayload, query: any) => {
       };
     }
 
-    const providers = await User.find(providerCriteria).select('_id');
+    const providers = await User.find(providerCriteria).select('_id').lean();
     const providerIds = providers.map(p => p._id);
     queryParams.creator = { $in: providerIds };
   }
@@ -97,7 +97,7 @@ const getHomeServices = async (user: JwtPayload, query: any) => {
     const matchingProviders = await User.find({
       role: USER_ROLES.PROVIDER,
       name: { $regex: searchTerm, $options: 'i' },
-    }).select('_id');
+    }).select('_id').lean();
 
     if (matchingProviders.length > 0) {
       orConditions.push({ creator: { $in: matchingProviders.map(p => p._id) } });

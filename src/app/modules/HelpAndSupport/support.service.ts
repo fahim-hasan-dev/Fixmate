@@ -9,9 +9,9 @@ import { Types } from 'mongoose';
 import { SupportStatus } from '../../../enum/support';
 import ApiError from '../../../errors/ApiError';
 import { StatusCodes } from 'http-status-codes';
-import { emailHelper } from '../../../helpers/emailHelper';
 import { emailTemplate } from '../../../shared/emailTemplate';
 import QueryBuilder from '../../builder/QueryBuilder';
+import { notificationQueue } from '../../queues';
 
 // Create a new support ticket and notify all administrators
 const createSupport = async (user: JwtPayload, data: Partial<ISupport>) => {
@@ -108,9 +108,7 @@ const markAsResolve = async (_user: JwtPayload, supportId: string) => {
       email: user.email,
     });
 
-    setTimeout(() => {
-      emailHelper.sendEmail(emailData);
-    },0);
+    await notificationQueue.add('send-email', emailData);
   }
 
   return res;

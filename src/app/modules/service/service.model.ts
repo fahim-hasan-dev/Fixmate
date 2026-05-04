@@ -55,6 +55,7 @@ const serviceSchema = new Schema<IService>(
 serviceSchema.index({ category: 1, subCategory: 1 });
 serviceSchema.index({ creator: 1 });
 serviceSchema.index({ price: 1 });
+serviceSchema.index({ isDeleted: 1, isSuspended: 1 });
 serviceSchema.index({ createdAt: -1 });
 
 serviceSchema.pre('save', async function (next) {

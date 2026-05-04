@@ -8,7 +8,8 @@ import { AuthHelper } from './auth.helper';
 import { AuthCommonServices, authResponse } from './common';
 import { ILoginData } from '../../../interfaces/auth';
 import { emailTemplate } from '../../../shared/emailTemplate';
-import { emailHelper } from '../../../helpers/emailHelper';
+import { notificationQueue } from '../../queues';
+import { cancelUnverifiedCleanup, scheduleUnverifiedCleanup } from '../../queues/queueUtils';
 import { JwtPayload } from 'jsonwebtoken';
 import { jwtHelper } from '../../../helpers/jwtHelper';
 import config from '../../../config';
@@ -33,7 +34,7 @@ export const createUser = async (payload: IUser) => {
     const isUserExist = await User.findOne({
       email: payload.email,
       status: { $nin: [USER_STATUS.DELETED] },
-    }).session(session);
+    }).session(session).lean();
 
     if (isUserExist) {
       throw new ApiError(StatusCodes.BAD_REQUEST, `An account is already registered with this email address. Try logging in instead.`);
@@ -60,13 +61,9 @@ export const createUser = async (payload: IUser) => {
       role: payload.role || USER_ROLES.CLIENT,
     };
 
-    // Ensure providerDetails is only present for PROVIDER role
     if (userData.role !== USER_ROLES.PROVIDER) {
       delete userData.providerDetails;
     } else if (!userData.providerDetails) {
-      // Initialize empty providerDetails for providers if needed, 
-      // or let it be undefined if preferred. Given the requirement, 
-      // we can just leave it to be filled later or init with empty object.
       userData.providerDetails = {};
     }
 
@@ -76,14 +73,14 @@ export const createUser = async (payload: IUser) => {
 
     const createdUser = user[0];
 
-    setTimeout(() => {
-      const createAccountEmail = emailTemplate.createAccount({
-        name: payload.name,
-        email: payload.email,
-        otp,
-      });
-      emailHelper.sendEmail(createAccountEmail);
-    }, 0);
+    const createAccountEmail = emailTemplate.createAccount({
+      name: payload.name,
+      email: payload.email,
+      otp,
+    });
+    
+    await notificationQueue.add('send-email', createAccountEmail);
+    await scheduleUnverifiedCleanup(createdUser._id.toString());
 
     await session.commitTransaction();
     return createdUser._id;
@@ -171,7 +168,7 @@ const forgetPassword = async (email?: string, phone?: string) => {
   const isUserExist = await User.findOne({
     ...query,
     status: { $in: [USER_STATUS.ACTIVE] },
-  });
+  }).lean();
 
   if (!isUserExist) {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'We couldn\'t find an account matching that email or phone number.');
@@ -205,9 +202,7 @@ const forgetPassword = async (email?: string, phone?: string) => {
       otp,
     });
 
-    setTimeout(() => {
-      emailHelper.sendEmail(forgetPasswordEmailTemplate);
-    }, 0);
+    await notificationQueue.add('send-email', forgetPasswordEmailTemplate);
   }
 
   return 'OTP sent successfully.';
@@ -304,6 +299,7 @@ const verifyAccount = async (email: string, onetimeCode: string): Promise<IAuthR
 
   if (!isUserExist.verified) {
     await User.findByIdAndUpdate(isUserExist._id, { $set: { verified: true } }, { new: true });
+    await cancelUnverifiedCleanup(isUserExist._id.toString());
 
     const tokens = AuthHelper.createToken(
       isUserExist._id,
@@ -445,7 +441,7 @@ const resendOtpToPhoneOrEmail = async (
       { new: true },
     );
 
-    await emailHelper.sendEmail(forgetPasswordEmailTemplate);
+    await notificationQueue.add('send-email', forgetPasswordEmailTemplate);
   }
 
   if (phone) {
@@ -497,7 +493,7 @@ const resendOtp = async (email: string, authType: 'createAccount' | 'resetPasswo
   const isUserExist = await User.findOne({
     email: email.toLowerCase().trim(),
     status: { $in: [USER_STATUS.ACTIVE] },
-  }).select('+authentication');
+  }).select('+authentication').lean();
 
   if (!isUserExist) {
     throw new ApiError(
@@ -540,9 +536,7 @@ const resendOtp = async (email: string, authType: 'createAccount' | 'resetPasswo
       type: authType,
     });
 
-    setTimeout(() => {
-      emailHelper.sendEmail(forgetPasswordEmailTemplate);
-    }, 0);
+    await notificationQueue.add('send-email', forgetPasswordEmailTemplate);
   }
 
   return 'OTP sent successfully.';

@@ -7,6 +7,7 @@ import { User } from '../user/user.model';
 import { handleBookingSettlement } from '../payment/payment.utils';
 import { NotificationService } from '../notification/notification.service';
 import { Service } from '../service/service.model';
+import { cancelBookingCleanup, cancelScheduledSettlement, scheduleAutoSettlement } from '../../queues/queueUtils';
 
 const VALID_TRANSITIONS: Record<string, BOOKING_STATUS[]> = {
   [BOOKING_STATUS.CREATED]: [BOOKING_STATUS.REQUESTED, BOOKING_STATUS.CANCELLED],
@@ -115,6 +116,22 @@ export class BookingStateMachine {
     }
 
     await booking.save(session ? { session } : undefined);
+
+    if (currentState === BOOKING_STATUS.CREATED) {
+      await cancelBookingCleanup(bookingId.toString());
+    }
+
+    // BullMQ - Handle exact-time auto-settlement scheduling
+    if (targetState === BOOKING_STATUS.COMPLETED_BY_PROVIDER) {
+      await scheduleAutoSettlement(bookingId.toString());
+    } else if (
+      targetState === BOOKING_STATUS.SETTLED ||
+      targetState === BOOKING_STATUS.CONFIRMED_BY_CLIENT ||
+      targetState === BOOKING_STATUS.DISPUTED ||
+      targetState === BOOKING_STATUS.CANCELLED
+    ) {
+      await cancelScheduledSettlement(bookingId.toString());
+    }
 
     if (targetState === BOOKING_STATUS.SETTLED || targetState === BOOKING_STATUS.AUTO_SETTLED) {
       await handleBookingSettlement(bookingId.toString(), session);

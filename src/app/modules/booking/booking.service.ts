@@ -10,6 +10,7 @@ import { Service } from '../service/service.model';
 import { User } from '../user/user.model';
 import { SERVICE_DAY } from '../../../enum/service';
 import { BookingStateMachine } from './bookingStateMachine';
+import { scheduleBookingCleanup } from '../../queues/queueUtils';
 import { createPaystackCheckout } from '../../../helpers/paystackHelper';
 import { Request } from 'express';
 import { Payment } from '../payment/payment.model';
@@ -79,6 +80,8 @@ const createBooking = async (user: JwtPayload, data: IBooking, req: Request) => 
     specialNote: data.specialNote,
     bookingStatus: BOOKING_STATUS.CREATED,
   });
+
+  await scheduleBookingCleanup(booking._id.toString());
 
   const url = await createPaystackCheckout(
     req,

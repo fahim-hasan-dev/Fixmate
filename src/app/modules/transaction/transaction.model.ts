@@ -31,5 +31,7 @@ transactionSchema.pre('save', async function (next) {
   }
   next();
 });
+transactionSchema.index({ user: 1, type: 1, status: 1 });
+transactionSchema.index({ createdAt: -1 });
 
 export const Transaction = model<ITransaction>('Transaction', transactionSchema);
