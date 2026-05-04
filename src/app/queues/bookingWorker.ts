@@ -33,11 +33,7 @@ export const bookingWorker = new Worker(
         return;
       }
 
-      await BookingStateMachine.transitionState(
-        bookingId,
-        'system',
-        BOOKING_STATUS.CONFIRMED_BY_CLIENT,
-      );
+      // Transition directly to AUTO_SETTLED to trigger payment release
       await BookingStateMachine.transitionState(
         bookingId,
         'system',
