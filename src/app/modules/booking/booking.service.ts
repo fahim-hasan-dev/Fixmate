@@ -44,10 +44,11 @@ const createBooking = async (user: JwtPayload, data: IBooking, req: Request) => 
   if (!provider) throw new ApiError(StatusCodes.NOT_FOUND, 'We\'re having trouble locating the service provider. Please try again in a moment.');
 
   const bookingDate = new Date(data.date);
-  const now = new Date();
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
-  // Validate if the selected date is in the past
-  if (bookingDate < now) {
+  // Validate if the selected date is in the past (ignoring time)
+  if (bookingDate.setHours(0, 0, 0, 0) < today.getTime()) {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Please select a future date for your booking.');
   }
 
