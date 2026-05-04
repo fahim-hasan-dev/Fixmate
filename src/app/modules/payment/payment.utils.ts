@@ -6,6 +6,7 @@ import { User } from '../user/user.model';
 import { settlePendingPenaltyDues } from '../penalty/penalty.utils';
 import { TransactionService } from '../transaction/transaction.service';
 import { NotificationService } from '../notification/notification.service';
+import { invalidateProfileCache } from '../../utils/cacheUtils';
 
 export const handleBookingSettlement = async (bookingId: string, session?: mongoose.ClientSession) => {
   try {
@@ -26,6 +27,9 @@ export const handleBookingSettlement = async (bookingId: string, session?: mongo
     await User.findByIdAndUpdate(providerId, {
       $inc: { 'providerDetails.wallet': creditAmount, 'providerDetails.metrics.totalReceivedJobs': 1 },
     }, { session });
+
+    // Sync profile cache to reflect new wallet balance
+    await invalidateProfileCache(providerId);
 
     // Update Payment record status
     payment.isSettled = true;

@@ -7,6 +7,7 @@ import { StatusCodes } from 'http-status-codes';
 import ApiError from '../../../errors/ApiError';
 import config from '../../../config';
 import { generateCustomId } from '../../../utils/idGenerator';
+import { invalidateProfileCache } from '../../utils/cacheUtils';
 
 const UserSchema = new Schema<IUser, UserModel>(
   {
@@ -358,6 +359,9 @@ UserSchema.statics.updateRankingScore = async function (
     },
     { session: session || null },
   );
+
+  // Sync profile cache to reflect new ranking and rating scores
+  await invalidateProfileCache(providerId.toString());
 };
 
 UserSchema.pre('save', async function (this: IUser & mongoose.Document, next) {

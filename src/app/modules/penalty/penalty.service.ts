@@ -9,6 +9,7 @@ import { NotificationService } from '../notification/notification.service';
 import { TransactionService } from '../transaction/transaction.service';
 import exceljs from 'exceljs';
 import QueryBuilder from '../../builder/QueryBuilder';
+import { invalidateProfileCache } from '../../utils/cacheUtils';
 
 // crete penalty by admin
 const createPenaltyByAdmin = async (payload: {
@@ -58,6 +59,9 @@ const createPenaltyByAdmin = async (payload: {
         { session }
       );
     }
+
+    // Sync profile cache to reflect the penalty deduction
+    await invalidateProfileCache((providerObj as any)._id.toString());
 
     [result] = await Penalty.create(
       [{ user: provider, type: 'PROVIDER', booking, amount, taken, due, reason, status }],

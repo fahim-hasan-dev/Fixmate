@@ -13,15 +13,28 @@ import { Review } from '../review/review.model';
 import { Booking } from '../booking/booking.model';
 import { BOOKING_STATUS } from '../../../enum/booking';
 import { Verification } from '../verification/verification.model';
+import { redisConnection } from '../../../helpers/redis';
+import { CACHE_KEYS, invalidateProfileCache } from '../../utils/cacheUtils';
 
-// Retrieve the current user's profile information
+// Retrieve the current user's profile
 const getProfile = async (user: JwtPayload) => {
+  const cacheKey = CACHE_KEYS.PROFILE(user.authId);
+
+  // Check cache first
+  const cachedProfile = await redisConnection.get(cacheKey);
+  if (cachedProfile) {
+    return JSON.parse(cachedProfile);
+  }
+
   const existingUser = await User.findById(user.authId)
     .select('-password -authentication -isDeleted')
     .lean()
     .exec();
 
   if (!existingUser) throw new ApiError(StatusCodes.NOT_FOUND, 'We couldn\'t find your account information.');
+
+  await redisConnection.set(cacheKey, JSON.stringify(existingUser), 'EX', 24 * 60 * 60);
+
   return existingUser;
 };
 
@@ -48,6 +61,9 @@ const updateUserProfile = async (user: JwtPayload, payload: Partial<IUser>) => {
     .select('-password -authentication')
     .lean()
     .exec();
+
+  // Clear cache to ensure fresh data on next load
+  await invalidateProfileCache(userId);
 
   return updatedUser;
 };
@@ -82,6 +98,9 @@ const updateProviderProfile = async (user: JwtPayload, payload: any) => {
     .select('-password -authentication')
     .lean()
     .exec();
+
+  // Clear cache to ensure fresh data on next load
+  await invalidateProfileCache(userId);
 
   return updatedUser;
 };
