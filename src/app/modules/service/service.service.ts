@@ -44,7 +44,7 @@ const updateService = async (id: string, payload: Partial<IService>) => {
 
 // Retrieve all services created by a specific provider
 const getHomeServices = async (user: JwtPayload, query: any) => {
-  const { distance, minRating, maxRating, ...queryParams } = query;
+  const { distance, minRating, maxRating, searchTerm, ...queryParams } = query;
 
   const client = await User.findById(user.authId).select('location').lean();
   if (!client || !client.location || !Array.isArray(client.location.coordinates) || client.location.coordinates.length < 2) {
@@ -86,8 +86,25 @@ const getHomeServices = async (user: JwtPayload, query: any) => {
     ),
     queryParams,
   )
-    .filter()
-    .search(['category', 'subCategory']);
+    .filter();
+
+  if (searchTerm) {
+    const orConditions: any[] = [
+      { category: { $regex: searchTerm, $options: 'i' } },
+      { subCategory: { $regex: searchTerm, $options: 'i' } },
+    ];
+
+    const matchingProviders = await User.find({
+      role: USER_ROLES.PROVIDER,
+      name: { $regex: searchTerm, $options: 'i' },
+    }).select('_id');
+
+    if (matchingProviders.length > 0) {
+      orConditions.push({ creator: { $in: matchingProviders.map(p => p._id) } });
+    }
+
+    serviceQuery.modelQuery = serviceQuery.modelQuery.find({ $or: orConditions });
+  }
 
   // Priority to subscribed providers
   serviceQuery.modelQuery = serviceQuery.modelQuery.sort('-isCreatorSubscribed');
@@ -112,12 +129,16 @@ const getHomeServices = async (user: JwtPayload, query: any) => {
   return { meta, data: formattedData };
 };
 
-
 // Retrieve all available services
 const getServices = async (user: JwtPayload, query: any) => {
   const { searchTerm, ...rest } = query;
 
   const matchStage: any = { isDeleted: false };
+  
+  const isSuspended = rest.isSuspended;
+  if (isSuspended !== undefined) {
+    matchStage.isSuspended = isSuspended === 'true';
+  }
 
   if (user.role === USER_ROLES.PROVIDER) {
     matchStage.creator = new Types.ObjectId(user.authId || user.id);
@@ -146,6 +167,7 @@ const getServices = async (user: JwtPayload, query: any) => {
           { subCategory: { $regex: searchTerm, $options: 'i' } },
           { customId: { $regex: searchTerm, $options: 'i' } },
           { 'creator.customId': { $regex: searchTerm, $options: 'i' } },
+          { 'creator.name': { $regex: searchTerm, $options: 'i' } },
         ],
       },
     });
