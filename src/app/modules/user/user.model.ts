@@ -139,8 +139,8 @@ const UserSchema = new Schema<IUser, UserModel>(
           default: '',
         },
         language: {
-          type: String,
-          default: '',
+          type: [String],
+          default:[],
         },
         overView: {
           type: String,

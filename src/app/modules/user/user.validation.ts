@@ -35,7 +35,7 @@ const updateProviderProfileZodSchema = z.object({
           nationalId: z.string().optional(),
           nationality: z.string().optional(),
           experience: z.string().optional(),
-          language: z.string().optional(),
+          language: z.array(z.string()).optional(),
           overView: z.string().optional(),
           availableDay: z.array(z.string()).optional(),
           startTime: z.string().optional(),

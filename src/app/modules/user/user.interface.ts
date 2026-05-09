@@ -42,7 +42,7 @@ export type IUser = {
     nationalId?: string;
     nationality?: string;
     experience?: string;
-    language?: string;
+    language?: string[];
     overView?: string;
     wallet?: number;
     availableDay?: SERVICE_DAY[];
