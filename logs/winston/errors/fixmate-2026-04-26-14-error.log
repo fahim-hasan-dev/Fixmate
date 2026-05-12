@@ -1,9 +1,0 @@
-{Sun Apr 26 2026 14:27:13} [FIXMATE 🐞] error: ::ffff:10.10.7.104 - POST /api/v1/auth/signup 400 - 66.394 ms
-{Sun Apr 26 2026 14:49:02} [FIXMATE 🐞] error: ::ffff:10.10.7.104 - POST /api/v1/auth/login 400 - 243.265 ms
-{Sun Apr 26 2026 14:49:36} [FIXMATE 🐞] error: ::ffff:10.10.7.104 - POST /api/v1/auth/login 400 - 216.126 ms
-{Sun Apr 26 2026 14:49:47} [FIXMATE 🐞] error: ::ffff:10.10.7.104 - POST /api/v1/auth/login 400 - 204.142 ms
-{Sun Apr 26 2026 14:51:25} [FIXMATE 🐞] error: ::ffff:10.10.7.94 - POST /api/v1/auth/login 400 - 3.055 ms
-{Sun Apr 26 2026 14:51:44} [FIXMATE 🐞] error: ::ffff:10.10.7.94 - POST /api/v1/auth/login 400 - 2.885 ms
-{Sun Apr 26 2026 14:51:54} [FIXMATE 🐞] error: ::ffff:10.10.7.94 - POST /api/v1/auth/login 400 - 5.471 ms
-{Sun Apr 26 2026 14:52:08} [FIXMATE 🐞] error: ::ffff:10.10.7.94 - POST /api/v1/auth/login 400 - 3.787 ms
-{Sun Apr 26 2026 14:52:12} [FIXMATE 🐞] error: ::ffff:10.10.7.94 - POST /api/v1/auth/login 400 - 3.819 ms

@@ -1,3 +1,0 @@
-{Sun Apr 26 2026 02:45:34} [FIXMATE 🐞] error: ::ffff:10.10.7.94 - POST /api/v1/auth/login 400 - 68.684 ms
-{Sun Apr 26 2026 02:46:43} [FIXMATE 🐞] error: ::ffff:10.10.7.94 - POST /api/v1/auth/login 400 - 8.062 ms
-{Sun Apr 26 2026 02:46:56} [FIXMATE 🐞] error: ::ffff:10.10.7.94 - POST /api/v1/auth/login 400 - 5.673 ms

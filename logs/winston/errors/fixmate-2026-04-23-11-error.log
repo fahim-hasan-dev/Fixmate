@@ -1,2 +1,0 @@
-{Thu Apr 23 2026 11:10:15} [FIXMATE 🐞] error: ::ffff:10.10.7.104 - POST /api/v1/bookings?status=REQUESTED 404 - 2.891 ms
-{Thu Apr 23 2026 11:31:37} [FIXMATE 🐞] error: ::ffff:10.10.7.104 - PATCH /api/v1/bookings/69e9a883a8599241977af9f5/status 400 - 4736.649 ms

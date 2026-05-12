@@ -171,10 +171,10 @@ export const createDisputeRefundRecord = async (
 // Create a Paystack transfer recipient for a provider
 const generateRecipient = async (req: Request) => {
   const user = req.user;
-  const { name, accountNumber, bankCode } = req.body;
+  const {  accountNumber, bankCode } = req.body;
 
-  if (!name || !accountNumber || !bankCode) {
-    throw new ApiError(StatusCodes.BAD_REQUEST, 'Please provide your full name, account number, and bank code to continue.');
+  if ( !accountNumber || !bankCode) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'Please provide your account number, and bank code to continue.');
   }
 
   const userOnDB = await User.findById(user.authId || user.id);
@@ -182,7 +182,7 @@ const generateRecipient = async (req: Request) => {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'We couldn\'t find your account details. Please try logging in again.');
   }
 
-  const recipient = await createTransferRecipient(name, accountNumber, bankCode);
+  const recipient = await createTransferRecipient(userOnDB.name, accountNumber, bankCode);
 
   await User.findByIdAndUpdate(userOnDB._id, {
     'providerDetails.paystackRecipientCode': recipient.recipient_code,

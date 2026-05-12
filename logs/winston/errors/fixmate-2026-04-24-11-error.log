@@ -1,7 +1,0 @@
-{Fri Apr 24 2026 11:30:45} [FIXMATE 🐞] error: ::ffff:10.10.7.34 - POST /api/v1/services 404 - 4.388 ms
-{Fri Apr 24 2026 11:30:50} [FIXMATE 🐞] error: ::ffff:10.10.7.34 - POST /api/v1/services 404 - 0.475 ms
-{Fri Apr 24 2026 11:39:46} [FIXMATE 🐞] error: ::ffff:10.10.7.34 - POST /api/v1/services 404 - 0.364 ms
-{Fri Apr 24 2026 11:40:03} [FIXMATE 🐞] error: ::ffff:10.10.7.34 - POST /api/v1/services 404 - 0.213 ms
-{Fri Apr 24 2026 11:41:54} [FIXMATE 🐞] error: ::ffff:10.10.7.34 - DELETE /api/v1/services/69eb029772520407a2e0c4e0 404 - 0.431 ms
-{Fri Apr 24 2026 11:50:57} [FIXMATE 🐞] error: ::ffff:10.10.7.34 - PATCH /api/v1/services/update-service/?id=69e065791a190894fbea6381 404 - 2.157 ms
-{Fri Apr 24 2026 11:55:00} [FIXMATE 🐞] error: ::ffff:10.10.7.34 - DELETE /api/v1/services/69eb029772520407a2e0c4e0 404 - 0.230 ms

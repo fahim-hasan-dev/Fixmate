@@ -1,6 +1,0 @@
-{Sat Apr 25 2026 11:04:22} [FIXMATE 🐞] error: ::ffff:10.10.7.104 - GET /api/v1/payment/history/69ec2cb9b9ad827c2a022dd4 404 - 5.571 ms
-{Sat Apr 25 2026 11:13:52} [FIXMATE 🐞] error: ::ffff:10.10.7.104 - GET /api/v1/payment/history/69ec2cb9b9ad827c2a022dd4 404 - 41.746 ms
-{Sat Apr 25 2026 11:13:57} [FIXMATE 🐞] error: ::ffff:10.10.7.104 - GET /api/v1/payment/history/69ec2cb9b9ad827c2a022dd4 404 - 2.450 ms
-{Sat Apr 25 2026 11:16:25} [FIXMATE 🐞] error: ::ffff:10.10.7.104 - GET /api/v1/payment/history/69ec2cb9b9ad827c2a022dd4 404 - 2.784 ms
-{Sat Apr 25 2026 11:42:37} [FIXMATE 🐞] error: ::ffff:10.10.7.104 - POST /api/v1/auth/signup 400 - 252.924 ms
-{Sat Apr 25 2026 11:52:58} [FIXMATE 🐞] error: ::ffff:10.10.7.101 - GET /favicon.ico 404 - 22.619 ms

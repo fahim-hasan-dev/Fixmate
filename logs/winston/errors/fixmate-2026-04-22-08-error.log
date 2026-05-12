@@ -1,4 +1,0 @@
-{Wed Apr 22 2026 08:29:30} [FIXMATE 🐞] error: ::ffff:10.10.7.94 - GET /favicon.ico 404 - 2.126 ms
-{Wed Apr 22 2026 08:30:02} [FIXMATE 🐞] error: ::ffff:10.10.7.104 - GET //api/v1/bookings?status=SETTLED,AUTO_SETTLED,CANCELLED,DISPUTED 404 - 0.567 ms
-{Wed Apr 22 2026 08:30:04} [FIXMATE 🐞] error: ::ffff:10.10.7.104 - GET //api/v1/bookings?status=SETTLED,AUTO_SETTLED,CANCELLED,DISPUTED 404 - 0.962 ms
-{Wed Apr 22 2026 08:31:04} [FIXMATE 🐞] error: ::ffff:10.10.7.104 - GET //api/v1/bookings?status=SETTLED,AUTO_SETTLED,CANCELLED,DISPUTED 404 - 0.372 ms

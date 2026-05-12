@@ -1,3 +1,0 @@
-{Thu Apr 23 2026 17:41:00} [FIXMATE 🐞] error: ::ffff:10.10.7.94 - GET /api/v1/payment/download-invoice/69d22e1cd88326112951322c 500 - 4.679 ms
-{Thu Apr 23 2026 17:41:07} [FIXMATE 🐞] error: ::ffff:10.10.7.94 - GET /api/v1/payment/download-invoice/69d22ae1d883261129513126 500 - 3.207 ms
-{Thu Apr 23 2026 17:42:38} [FIXMATE 🐞] error: ::ffff:10.10.7.94 - GET /api/v1/payment/download-invoice/69e9fd5a8a9eabdfc47001cd 500 - 2.478 ms

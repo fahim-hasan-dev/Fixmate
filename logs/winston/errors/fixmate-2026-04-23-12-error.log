@@ -1,1 +1,0 @@
-{Thu Apr 23 2026 12:32:17} [FIXMATE 🐞] error: ::ffff:10.10.7.104 - GET /api/v1/bookings?status=ACCEPTED&status=REQUESTED 500 - 17.117 ms

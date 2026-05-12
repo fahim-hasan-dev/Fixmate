@@ -1,3 +1,0 @@
-{Fri Apr 24 2026 09:19:36} [FIXMATE 🐞] error: ::ffff:10.10.7.94 - GET /api/v1/user/69e064241a190894fbea636d 500 - 32.515 ms
-{Fri Apr 24 2026 09:19:40} [FIXMATE 🐞] error: ::ffff:10.10.7.94 - GET /api/v1/user/69e064241a190894fbea636d 500 - 11.854 ms
-{Fri Apr 24 2026 09:39:44} [FIXMATE 🐞] error: ::ffff:10.10.7.104 - PATCH /api/v1/user/update-provider-profile 400 - 17.726 ms

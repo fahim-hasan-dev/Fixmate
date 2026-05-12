@@ -1,5 +1,0 @@
-{Thu Apr 23 2026 18:09:11} [FIXMATE 🐞] error: ::ffff:10.10.7.94 - GET /api/v1/admin/overview? 400 - 18.069 ms
-{Thu Apr 23 2026 18:09:29} [FIXMATE 🐞] error: ::ffff:10.10.7.94 - GET /api/v1/admin/overview? 400 - 13.614 ms
-{Thu Apr 23 2026 18:09:54} [FIXMATE 🐞] error: ::ffff:10.10.7.94 - GET /api/v1/admin/overview? 400 - 20.297 ms
-{Thu Apr 23 2026 18:09:54} [FIXMATE 🐞] error: ::ffff:10.10.7.94 - GET /api/v1/admin/overview? 400 - 22.090 ms
-{Thu Apr 23 2026 18:42:26} [FIXMATE 🐞] error: ::ffff:10.10.7.94 - PATCH /api/v1/bookings/69d222fa974a45f2b3db5563/status 404 - 4.048 ms
