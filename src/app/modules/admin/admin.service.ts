@@ -22,7 +22,6 @@ export const overview = async (yearChart: string, startDate?: string, endDate?: 
 
   const totalProviders = await User.countDocuments({ role: USER_ROLES.PROVIDER, ...dateQuery });
   const totalUsers = await User.countDocuments({ role: { $ne: USER_ROLES.ADMIN }, ...dateQuery });
-  const upCommingOrders = await Booking.countDocuments({ bookingStatus: BOOKING_STATUS.ACCEPTED });
 
   const topProviders = await User.aggregate([
     {
@@ -125,6 +124,28 @@ export const overview = async (yearChart: string, startDate?: string, endDate?: 
     { $group: { _id: null, totalPlatformFee: { $sum: '$platformFee' } } },
   ]);
 
+  const [{ totalGatewayFee = 0 } = {}] = await Payment.aggregate([
+    {
+      $lookup: {
+        from: 'bookings',
+        localField: 'booking',
+        foreignField: '_id',
+        as: 'bookingDetails',
+      },
+    },
+    { $unwind: '$bookingDetails' },
+    {
+      $match: {
+        $or: [
+          { 'bookingDetails.bookingStatus': { $in: [BOOKING_STATUS.SETTLED, BOOKING_STATUS.AUTO_SETTLED] } },
+          { paymentStatus: PAYMENT_STATUS.PARTIAL_REFUNDED }
+        ],
+        ...dateQuery
+      }
+    },
+    { $group: { _id: null, totalGatewayFee: { $sum: '$paystackGatewayFee' } } },
+  ]);
+
   const totalRevenue = totalRevenueValue;
   const totalEarning = totalPlatformFee + totalClientPenalty + totalProviderPenalty;
 
@@ -201,9 +222,9 @@ export const overview = async (yearChart: string, startDate?: string, endDate?: 
   return {
     totalUsers,
     totalProviders,
-    upCommingOrders,
     totalRevenue,
     totalEarning,
+    totalGatewayFee,
     recentServices: enhancedRecentServices,
     topProviders,
     monthlyEarning,

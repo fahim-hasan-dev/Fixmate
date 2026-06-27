@@ -1,8 +1,0 @@
-{Tue Apr 28 2026 15:24:03} [FIXMATE 🐞] error: ::ffff:10.10.7.94 - GET /api/v1/bookings?status=IN_PROGRESS,COMPLETED_BY_PROVIDER 401 - 25.324 ms
-{Tue Apr 28 2026 15:24:34} [FIXMATE 🐞] error: ::ffff:10.10.7.94 - POST /api/v1/auth/verify-account 400 - 11.552 ms
-{Tue Apr 28 2026 15:24:37} [FIXMATE 🐞] error: ::ffff:10.10.7.94 - POST /api/v1/auth/signup 400 - 17.882 ms
-{Tue Apr 28 2026 15:24:37} [FIXMATE 🐞] error: ::ffff:10.10.7.94 - POST /api/v1/auth/signup 400 - 5.057 ms
-{Tue Apr 28 2026 15:55:32} [FIXMATE 🐞] error: ::ffff:10.10.7.94 - PATCH /api/v1/dispute/69f07ce6e5a27547bb04153a/resolve 400 - 42.053 ms
-{Tue Apr 28 2026 15:55:38} [FIXMATE 🐞] error: ::ffff:10.10.7.94 - PATCH /api/v1/dispute/69f07ce6e5a27547bb04153a/resolve 400 - 4.801 ms
-{Tue Apr 28 2026 15:55:43} [FIXMATE 🐞] error: ::ffff:10.10.7.94 - PATCH /api/v1/dispute/69f07ce6e5a27547bb04153a/resolve 400 - 3.554 ms
-{Tue Apr 28 2026 15:55:49} [FIXMATE 🐞] error: ::ffff:10.10.7.94 - PATCH /api/v1/dispute/69f07ce6e5a27547bb04153a/resolve 400 - 4.537 ms
