@@ -371,7 +371,7 @@ export class PDFInvoiceMaker {
     let y = this.currentY;
 
     if (role === USER_ROLE.CLIENT) {
-      this.addBreakdownRow('Service Price', this.formatCurrency(data.servicePrice - data.vat), y);
+      this.addBreakdownRow('Service Price', this.formatCurrency(data.servicePrice), y);
       y += 18;
       this.addBreakdownRow('VAT (inc.)', this.formatCurrency(data.vat), y);
       y += 18;
@@ -380,7 +380,7 @@ export class PDFInvoiceMaker {
       this.addHorizontalLine();
       this.addTotalRow('Total', this.formatCurrency(data.servicePrice));
     } else if (role === USER_ROLE.PROVIDER) {
-      this.addBreakdownRow('Service Price', this.formatCurrency(data.servicePrice - data.vat), y);
+      this.addBreakdownRow('Service Price', this.formatCurrency(data.servicePrice), y);
       y += 18;
       this.addBreakdownRow('VAT', this.formatCurrency(data.vat), y);
       y += 18;
@@ -392,7 +392,7 @@ export class PDFInvoiceMaker {
       this.addTotalRow('Total', this.formatCurrency(data.servicePrice));
     } else {
       // Admin / Super Admin
-      this.addBreakdownRow('Service Price', this.formatCurrency(data.servicePrice - data.vat), y);
+      this.addBreakdownRow('Service Price', this.formatCurrency(data.servicePrice), y);
       y += 18;
       this.addBreakdownRow('VAT', this.formatCurrency(data.vat), y);
       y += 18;
