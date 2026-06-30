@@ -42,6 +42,7 @@ router.post(
 
 router.get(
   '/download-invoice/:id',
+  auth(USER_ROLES.PROVIDER, USER_ROLES.CLIENT, USER_ROLES.ADMIN),
   generateInvoiceAPI
 );
 
